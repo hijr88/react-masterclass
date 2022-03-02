@@ -1,5 +1,6 @@
 import Router from './Router';
 import { createGlobalStyle } from 'styled-components';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 //https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 const GlobalStyle = createGlobalStyle`
@@ -72,6 +73,7 @@ function App () {
     <>
       <GlobalStyle/>
       <Router/>
+      <ReactQueryDevtools initialIsOpen={true}/>
     </>
   );
 }
