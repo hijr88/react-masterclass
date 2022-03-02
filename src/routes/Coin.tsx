@@ -40,6 +40,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 33%;
 
   span:first-child {
     font-size: 10px;
@@ -66,11 +67,11 @@ const Tab = styled.span<{ isActive: boolean }>`
   font-size: 12px;
   font-weight: 400;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 7px 0;
   border-radius: 10px;
   color: ${props => props.isActive ? props.theme.accentColor : props.theme.textColor};
 
   a {
+    padding: 7px 0;
     display: block;
   }
 `;
@@ -186,11 +187,12 @@ function Coin () {
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
-            <Routes>
-              <Route path="price" element={<Price/>}/>
-              <Route path="chart" element={<Chart coinId={coinId!}/>}/>
-            </Routes>
           </Tabs>
+
+          <Routes>
+            <Route path="price" element={<Price/>}/>
+            <Route path="chart" element={<Chart coinId={coinId!}/>}/>
+          </Routes>
         </>
       )}
     </Container>
