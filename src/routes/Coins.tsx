@@ -25,12 +25,14 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   border: 1px solid white;
+
   a {
     display: flex;
     align-items: center;
     padding: 20px;
     transition: color .2s ease-in;
   }
+
   &:hover {
     a {
       color: ${props => props.theme.accentColor};
@@ -64,8 +66,12 @@ interface ICoin {
   type: string
 }
 
-function Coins () {
-  const {isLoading, data} = useQuery<ICoin[]>('allCoins', fetchCoins);
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({ toggleDark }: ICoinsProps) {
+  const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoins);
   return (
     <Container>
       <Helmet>
@@ -73,6 +79,7 @@ function Coins () {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
@@ -96,4 +103,5 @@ function Coins () {
     </Container>
   );
 }
+
 export default Coins;
