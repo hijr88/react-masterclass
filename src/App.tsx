@@ -5,7 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { darkTheme, lightTheme } from './theme';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { isDarkAtom } from './routes/atoms';
+import { isDarkAtom } from './atoms';
 
 //https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 const GlobalStyle = createGlobalStyle`
