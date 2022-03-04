@@ -37,16 +37,20 @@ interface IForm {
   username: string;
   password: string;
   password1: string;
+  extraError?: string;
 }
 
 function ToDoList() {
-  const { register, handleSubmit, formState: { errors} } = useForm<IForm>({
+  const { register, handleSubmit, formState: { errors}, setError } = useForm<IForm>({
     defaultValues: {
       email: '@naver.com'
     }
   });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if(data.password !== data.password1) {
+      setError('password1', {message: 'Password are not the same'}, {shouldFocus: true})
+    }
+    setError('extraError', {message: 'Server offline.'});
   };
   console.log(errors);
   return (
@@ -66,7 +70,13 @@ function ToDoList() {
         />
         <span>{errors?.email?.message}</span>
         <input
-          {...register('firstName', { required: 'write here' })}
+          {...register('firstName', {
+            required: 'write here',
+            validate: { //객체로 만들어서 함수 여러개 가능
+              noYo: (value) => value.includes('yo') ? 'not allowed yo' : true,
+              noHan: (value) => !value.includes('han') || 'not allowed han'
+            }
+          })}
           placeholder="First Name"
         />
         <span>{errors?.firstName?.message}</span>
@@ -102,6 +112,7 @@ function ToDoList() {
         />
         <span>{errors?.password1?.message}</span>
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );
