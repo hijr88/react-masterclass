@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import ToDoList from './ToDoList';
+import ToDoList from './components/ToDoList';
 
 //https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 const GlobalStyle = createGlobalStyle`
