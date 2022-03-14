@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useViewportScroll } from 'framer-motion';
+import { useEffect } from 'react';
 
 const Wrapper = styled(motion.div)`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: 200vh;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, rgb(248, 190, 249), rgb(162, 128, 229));
@@ -26,8 +27,13 @@ function App() {
     'linear-gradient(135deg, rgb(248, 190, 249), rgb(162, 128, 229)',
     'linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0)'
   ]);
+  const { scrollY, scrollYProgress } = useViewportScroll();
+  useEffect(() => {
+    scrollY.onChange(() => {console.log(scrollY.get(), scrollYProgress.get());});
+  }, [scrollY, scrollYProgress]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5]);
   return (
-    <Wrapper style={{ background: gradient }}>
+    <Wrapper style={{ background: gradient, scale }}>
       <Box style={{ x, rotateZ }} drag="x" dragSnapToOrigin/>
     </Wrapper>
   );
