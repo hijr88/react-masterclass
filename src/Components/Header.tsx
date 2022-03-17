@@ -110,8 +110,8 @@ const navVariants = {
 
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMath = useMatch('/');
-  const tvMath = useMatch('/tv');
+  const homeMatch = useMatch('/');
+  const tvMatch = useMatch('/tv');
   const inputAnimation = useAnimation();
   const navAnimation = useAnimation();
   const { scrollY } = useViewportScroll();
@@ -142,13 +142,13 @@ function Header() {
   return (
     <Nav
       variants={navVariants}
-      initial='top'
+      initial="top"
       animate={navAnimation}
     >
       <Col>
         <Logo
           variants={logoVariants}
-          initial="normal"
+          animate="normal"
           whileHover="active"
           xmlns="http://www.w3.org/2000/svg"
           width="1024"
@@ -161,12 +161,12 @@ function Header() {
         <Items>
           <Item>
             <Link to="">
-              Home {homeMath && <Circle layoutId="circle"/>}
+              Home {homeMatch && <Circle layoutId="circle"/>}
             </Link>
           </Item>
           <Item>
             <Link to="tv">
-              Tv Shows {tvMath && <Circle layoutId="circle"/>}
+              Tv Shows {tvMatch && <Circle layoutId="circle"/>}
             </Link>
           </Item>
         </Items>
