@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from './App';
 import { theme } from './theme';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 //https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 const GlobalStyle = createGlobalStyle`
@@ -81,13 +82,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const client = new QueryClient();
+
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle/>
-        <App/>
-      </ThemeProvider>
+      <QueryClientProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle/>
+          <App/>
+        </ThemeProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
