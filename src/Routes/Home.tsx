@@ -5,6 +5,7 @@ import { getMovies, IGetMoviesResult } from '../api';
 import { makeImagePath } from '../utils';
 import { useState } from 'react';
 import useWindowDimensions from '../Hooks/useWindowDimensions';
+import { useMatch, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   background-color: black;
@@ -58,6 +59,7 @@ const Box = styled(motion.div)<{ $bgPhoto: string }>`
   background-position: center center;
   height: 200px;
   font-size: 66px;
+  cursor: pointer;
 
   &:first-child {
     transform-origin: left center;
@@ -111,6 +113,8 @@ const boxInfoVariants = {
 const offset = 6;
 
 function Home() {
+  const navigate = useNavigate();
+  const bigMovieMatch = useMatch('/movies/:movieId');
   const { data, isLoading } = useQuery<IGetMoviesResult>(['movies', 'nowPlaying'], getMovies);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -124,6 +128,9 @@ function Home() {
     setIndex(prev => prev === maxIndex ? 0 : prev + 1);
   };
   const toggleLeaving = () => setLeaving(prev => !prev);
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+  };
   return (
     <Wrapper>
       {isLoading ? <Loader>Loading...</Loader>
@@ -149,6 +156,8 @@ function Home() {
                     initial="normal"
                     whileHover="hover"
                     transition={{ type: 'tween' }}
+                    layoutId={movie.id + ''}
+                    onClick={() => onBoxClicked(movie.id)}
                   >
                     <BoxInfo variants={boxInfoVariants}>
                       <h4>{movie.title}</h4>
@@ -158,6 +167,14 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {bigMovieMatch &&
+                <motion.div
+                    style={{ position: 'absolute', width: '40vw', height: '80vh', backgroundColor: 'red', top: 50, left: 0, right: 0, margin: '0 auto'}}
+                    layoutId={bigMovieMatch.params.movieId}
+                />
+            }
+          </AnimatePresence>
         </>}
     </Wrapper>
   );
